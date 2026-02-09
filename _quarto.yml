@@ -1,0 +1,26 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Assignment One"
+  author: "Amahle Nzimande"
+  date: "2026/02/09"
+  chapters:
+    - index.qmd
+    - Project One.qmd
+    - Day3Prac.qmd
+    - DayFourPrac.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+

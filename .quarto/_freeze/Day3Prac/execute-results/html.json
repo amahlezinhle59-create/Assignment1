@@ -1,0 +1,17 @@
+{
+  "hash": "7c530b1c44ac9aea4bd874e81dcbc6f3",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Day Three Practical Q3 & Q4\"\nauthor: \"Amahle Nzimande\"\nformat: pdf\neditor: visual\n---\n\n**QUESTION FOUR**\n\n\n::: {.cell}\n\n```{.r .cell-code}\ncurve(sin(x), from = -2, to = 2) \n```\n\n::: {.cell-output-display}\n![](Day3Prac_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n:::\n\n\n**QUESTION FIVE**\n\n\n::: {.cell}\n\n```{.r .cell-code}\nrandoms <- rt(1000, 1)\n\n#Creating a manual QQ-plot with 95% confidence interval\n\nsorted_randoms <- sort(randoms)\n\nn <- length(randoms)\ni <- 1:n\n\n# Calculate plotting positions (probabilities)\np <- (i - 3/8) / (n + 1/4)\n\n# Generate normal quantiles by simulation (since we can't use qnorm)\nlarge_normal_sample <- rnorm(1000000)  # Large normal reference\ntheoretical_quantiles <- quantile(large_normal_sample, probs = p)\n\n# Calculate 95% probability envelopes by simulation\nn_sim <- 1000  # Number of simulations\nenvelope_matrix <- matrix(NA, nrow = n_sim, ncol = n)\n\n# Simulate many normal samples of size n\nfor (j in 1:n_sim) {\n    sim_sample <- rnorm(n)\n    sim_sorted <- sort(sim_sample)\n    envelope_matrix[j, ] <- sim_sorted\n}\n\n# Calculate 2.5% and 97.5% percentiles at each position\nlower_envelope <- apply(envelope_matrix, 2, quantile, probs = 0.025)\nupper_envelope <- apply(envelope_matrix, 2, quantile, probs = 0.975)\n\n# Create the QQ-plot\npar(mfrow = c(1, 2))  # Split plot window\n\n# Manual QQ-plot\nplot(theoretical_quantiles, sorted_randoms,\n     xlab = \"Theoretical Normal Quantiles\",\n     ylab = \"Sample Quantiles\",\n     main = \"Manual QQ-plot with 95% Envelopes\",\n     pch = 19, cex = 0.6,\n     ylim = c(-5, 5), xlim = c(-4, 4),\n     col = rgb(0, 0, 0, 0.7))\n\n# Add reference line (y = x)\nabline(a = 0, b = 1, col = \"red\", lwd = 2)\n\n# Add 95% probability bands\nlines(theoretical_quantiles, lower_envelope, \n      col = \"blue\", lty = 2, lwd = 2)\nlines(theoretical_quantiles, upper_envelope, \n      col = \"blue\", lty = 2, lwd = 2)\n\n# Add legend\nlegend(\"topleft\", \n       legend = c(\"Data\", \"Reference Line\", \"95% Envelope\"),\n       col = c(\"black\", \"red\", \"blue\"),\n       pch = c(19, NA, NA),\n       lty = c(NA, 1, 2),\n       lwd = c(NA, 2, 2))\n\n# Check with car::qqPlot for comparison\nlibrary(car)\n```\n\n::: {.cell-output .cell-output-stderr}\n\n```\nLoading required package: carData\n```\n\n\n:::\n\n```{.r .cell-code}\nqqPlot(randoms, envelope = 0.95, ylim = c(-5, 5),\n       main = \"car::qqPlot for Comparison\",\n       xlab = \"Normal Quantiles\",\n       ylab = \"Sample Quantiles\")\n```\n\n::: {.cell-output-display}\n![](Day3Prac_files/figure-html/unnamed-chunk-2-1.png){width=672}\n:::\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 236 267\n```\n\n\n:::\n:::\n\n",
+    "supporting": [
+      "Day3Prac_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
